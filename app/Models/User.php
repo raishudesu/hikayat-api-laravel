@@ -3,16 +3,21 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasUuids, HasApiTokens, HasFactory, Notifiable;
+
+    public function uniqueIds(): array
+    {
+        return ['uuid'];
+    }
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +29,10 @@ class User extends Authenticatable
         'last_name',
         'email',
         'password',
+        'bio',
+        'settings',
+        'social_links',
+        'is_verified_guide',
     ];
 
     /**
@@ -46,6 +55,9 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'settings' => 'array',
+            'social_links' => 'array',
+            'is_verified_guide' => 'boolean',
         ];
     }
 }
