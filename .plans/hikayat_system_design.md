@@ -178,6 +178,18 @@ We will use Laravel's built-in **Notifications** and **Mail** abstractions to ha
     - Eager load `user` and `likes_count` when fetching the feed to avoid N+1 queries.
     - Index `is_verified_guide` and `post_id` columns.
 
+4. **Rate Limiting**:
+    - **Global API Limit**: Default to 60 requests per minute for authenticated users to prevent resource exhaustion.
+    - **Authentication Brute Force**:
+        - `login`: 5 attempts per minute per email/IP.
+        - `register`: 3 attempts per hour per IP.
+    - **Content Spam Protection**:
+        - `posts`: 5 posts per 10 minutes.
+        - `comments`: 10 comments per 5 minutes.
+    - **Sensitive Endpoints**:
+        - `password-reset`: 3 requests per hour per email.
+        - `email-verification`: 3 resends per hour.
+
 ---
 
 ## 6. Future Expansion

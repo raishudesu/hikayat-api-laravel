@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -18,16 +18,18 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property string $uuid
+ * @property \Illuminate\Support\Carbon|null $deleted_at
  */
 class Post extends Model
 {
     /** @use HasFactory<\Database\Factories\PostFactory> */
-    use HasUuids, SoftDeletes, HasFactory;
+    use HasFactory, HasUuids, SoftDeletes;
 
     public function uniqueIds(): array
     {
         return ['uuid'];
     }
+
     protected $fillable = [
         'user_id',
         'parent_id',
@@ -40,9 +42,9 @@ class Post extends Model
     protected function casts(): array
     {
         return [
-            "deleted_at" => "datetime",
-            "latitude" => "decimal:6",
-            "longitude" => "decimal:6",
+            'deleted_at' => 'datetime',
+            'latitude' => 'decimal:6',
+            'longitude' => 'decimal:6',
         ];
     }
 
