@@ -4,6 +4,7 @@ namespace App\Services\Users;
 
 use App\Models\User;
 use App\Repositories\Eloquent\User\UserRepository;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Hash;
 
 class UserService
@@ -29,5 +30,10 @@ class UserService
     public function getUserByEmail(string $email): ?User
     {
         return $this->userRepository->getByEmail($email);
+    }
+
+    public function getUsers(?int $page, int $perPage = 20): LengthAwarePaginator
+    {
+        return $this->userRepository->paginate($page, $perPage);
     }
 }

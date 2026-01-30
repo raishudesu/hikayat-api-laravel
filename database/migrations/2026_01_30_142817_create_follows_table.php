@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('follows', function (Blueprint $table) {
             $table->foreignId('follower_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('following_id')->constrained('users')->cascadeOnDelete();
-            $table->dateTime('created_at')->default(now());
+            $table->dateTime('created_at')->useCurrent();
         });
     }
 
