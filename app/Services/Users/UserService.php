@@ -41,4 +41,9 @@ class UserService
     {
         return $this->userRepository->getByUuid($uuid);
     }
+
+    public function updateUser(string $uuid, array $userData): void
+    {
+        $this->userRepository->update($uuid, $userData);
+    }
 }

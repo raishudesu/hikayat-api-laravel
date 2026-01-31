@@ -12,4 +12,8 @@ interface UserRepositoryInterface
     public function create(array $userData): User;
 
     public function paginate(?int $page = null, int $perPage = 20): LengthAwarePaginator;
+
+    public function getByUuid(string $uuid): ?User;
+
+    public function update(string $uuid, array $userData): void;
 }

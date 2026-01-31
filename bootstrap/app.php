@@ -5,6 +5,7 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -17,6 +18,14 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->redirectGuestsTo(fn(Request $request) => $request->is('api/*') ? null : '/login');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
+        $exceptions->render(function (NotFoundHttpException $e, Request $request) {
+            if ($request->is('api/*') || $request->expectsJson()) {
+                return response()->json([
+                    'message' => 'Route not found.',
+                ], 404);
+            }
+        });
+
         $exceptions->render(function (AuthenticationException $e, Request $request) {
             if ($request->is('api/*') || $request->expectsJson()) {
                 return response()->json([
@@ -37,6 +46,7 @@ return Application::configure(basePath: dirname(__DIR__))
             if ($response->getStatusCode() === 500 && ($request->is('api/*') || $request->expectsJson())) {
                 return response()->json([
                     'message' => 'Something went wrong.',
+                    'error' => $e->getMessage(),
                 ], 500);
             }
 

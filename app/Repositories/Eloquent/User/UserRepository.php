@@ -27,4 +27,10 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::where('uuid', $uuid)->first();
     }
+
+
+    public function update(string $uuid, array $userData): void
+    {
+        User::where('uuid', $uuid)->update($userData);
+    }
 }
