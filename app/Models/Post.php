@@ -68,4 +68,25 @@ class Post extends Model
     {
         return $this->hasMany(Post::class, 'parent_id');
     }
+
+    /**
+     * Get all comments for this post.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Get all reports for this post.
+     */
+    public function reports()
+    {
+        return $this->morphMany(Report::class, 'reportable');
+    }
+
+    public function interactions()
+    {
+        return $this->hasMany(Interaction::class, 'interactable_id');
+    }
 }

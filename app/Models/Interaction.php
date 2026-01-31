@@ -2,27 +2,36 @@
 
 namespace App\Models;
 
+use App\Enums\InteractionType;
 use Illuminate\Database\Eloquent\Model;
 
 class Interaction extends Model
 {
-    const LIKE = "like";
-    const REPOST = "repost";
 
     const UPDATED_AT = null;
 
     protected $fillable = [
-        "type" => "enum:like,repost",
+        "user_id",
+        "interactable_id",
+        "type",
     ];
 
-    public function likes()
+    protected function casts(): array
     {
-        return $this->where("type", self::LIKE);
+        return [
+            "created_at" => "datetime",
+            "type" => InteractionType::class,
+        ];
     }
 
-    public function reposts()
+    public function scopeLikes($query)
     {
-        return $this->where("type", self::REPOST);
+        return $query->where("type", InteractionType::LIKE);
+    }
+
+    public function scopeReposts($query)
+    {
+        return $query->where("type", InteractionType::REPOST);
     }
 
     public function post()
@@ -33,12 +42,5 @@ class Interaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function casts()
-    {
-        return [
-            "created_at" => "datetime",
-        ];
     }
 }

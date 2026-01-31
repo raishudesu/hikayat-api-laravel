@@ -82,4 +82,49 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id')
             ->withTimestamps();
     }
+
+    /**
+     * Comments made by this user.
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * Bookings where this user is the hiker.
+     */
+    public function bookingsAsHiker()
+    {
+        return $this->hasMany(Booking::class, 'hiker_id');
+    }
+
+    /**
+     * Bookings where this user is the guide.
+     */
+    public function bookingsAsGuide()
+    {
+        return $this->hasMany(Booking::class, 'guide_id');
+    }
+
+    /**
+     * Subscriptions for this user.
+     */
+    public function subscriptions()
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    /**
+     * Reports made by this user.
+     */
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'reporter_id');
+    }
+
+    public function interactions()
+    {
+        return $this->hasMany(Interaction::class);
+    }
 }
