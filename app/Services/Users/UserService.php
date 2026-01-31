@@ -32,8 +32,13 @@ class UserService
         return $this->userRepository->getByEmail($email);
     }
 
-    public function getUsers(?int $page, int $perPage = 20): LengthAwarePaginator
+    public function getUsersPaginated(?int $page, int $perPage = 20): LengthAwarePaginator
     {
         return $this->userRepository->paginate($page, $perPage);
+    }
+
+    public function getUserByUuid(string $uuid): ?User
+    {
+        return $this->userRepository->getByUuid($uuid);
     }
 }

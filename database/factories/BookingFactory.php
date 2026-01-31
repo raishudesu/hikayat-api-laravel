@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\BookingStatus;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -20,9 +21,14 @@ class BookingFactory extends Factory
         return [
             'hiker_id' => User::factory(),
             'guide_id' => User::factory()->state(['is_verified_guide' => true]),
-            'status' => $this->faker->randomElement(['pending', 'accepted', 'declined', 'completed']),
-            'hike_date' => $this->faker->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
-            'notes' => $this->faker->paragraph(),
+            'status' => fake()->randomElement([
+                BookingStatus::PENDING,
+                BookingStatus::ACCEPTED,
+                BookingStatus::DECLINED,
+                BookingStatus::COMPLETED,
+            ]),
+            'hike_date' => fake()->dateTimeBetween('now', '+1 month')->format('Y-m-d'),
+            'notes' => fake()->paragraph(),
         ];
     }
 }

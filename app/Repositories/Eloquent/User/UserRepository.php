@@ -22,4 +22,9 @@ class UserRepository implements UserRepositoryInterface
     {
         return User::paginate($perPage, ['*'], 'page', $page)->withQueryString();
     }
+
+    public function getByUuid(string $uuid): ?User
+    {
+        return User::where('uuid', $uuid)->first();
+    }
 }

@@ -18,10 +18,24 @@ class UserController extends Controller
 
     public function index(UserRequest $request)
     {
-        $users = $this->userService->getUsers($request->query('page'), $request->query('per_page', 20));
+        $users = $this->userService->getUsersPaginated($request->query('page'), $request->query('per_page', 20));
 
         return UserResource::collection($users)->additional([
             'message' => 'Users retrieved successfully.',
         ]);
+    }
+
+    public function show(UserRequest $request, string $uuid)
+    {
+        $user = $this->userService->getUserByUuid($uuid);
+        if ($user) {
+            return UserResource::make($user)->additional([
+                'message' => 'User retrieved successfully.',
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'User not found.',
+        ], 404);
     }
 }
