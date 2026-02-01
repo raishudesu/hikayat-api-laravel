@@ -30,6 +30,14 @@ Route::group(['prefix' => 'v1', 'middleware' => 'throttle:api'], function () {
             ->only(['show', 'update'])
             ->names('users')
             ->parameters(['' => 'user']); // Force the parameter name to 'user' even on root resource
+
+        Route::post('/follow', [\App\Http\Controllers\Users\UserController::class, 'followUser'])
+            ->middleware('auth:sanctum')
+            ->name('users.follow');
+
+        Route::post('/unfollow', [\App\Http\Controllers\Users\UserController::class, 'unfollowUser'])
+            ->middleware('auth:sanctum')
+            ->name('users.unfollow');
     });
 
     // PUBLIC ACCESS

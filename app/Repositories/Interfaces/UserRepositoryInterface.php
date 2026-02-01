@@ -15,5 +15,7 @@ interface UserRepositoryInterface
 
     public function getByUuid(string $uuid): ?User;
 
+    public function getByUuidOrFail(string $uuid): User;
+
     public function update(string $uuid, array $userData): void;
 }

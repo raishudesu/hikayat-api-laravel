@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Users;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
+use App\Http\Requests\Users\UserFollowRequest;
 use App\Http\Resources\UserResource;
 use App\Services\Users\UserService;
 use Illuminate\Support\Facades\Gate;
@@ -48,6 +49,28 @@ class UserController extends Controller
 
         return response()->json([
             'message' => 'User password updated successfully.',
+        ], 200);
+    }
+
+    public function followUser(UserFollowRequest $request)
+    {
+        $user = $request->user();
+
+        $this->userService->followUser($user->uuid, $request->validated('following_id'));
+
+        return response()->json([
+            'message' => 'User followed successfully.',
+        ], 200);
+    }
+
+    public function unfollowUser(UserFollowRequest $request)
+    {
+        $user = $request->user();
+
+        $this->userService->unfollowUser($user->uuid, $request->validated('following_id'));
+
+        return response()->json([
+            'message' => 'User unfollowed successfully.',
         ], 200);
     }
 }

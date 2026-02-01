@@ -28,6 +28,11 @@ class UserRepository implements UserRepositoryInterface
         return User::where('uuid', $uuid)->first();
     }
 
+    public function getByUuidOrFail(string $uuid): User
+    {
+        return User::where('uuid', $uuid)->firstOrFail();
+    }
+
 
     public function update(string $uuid, array $userData): void
     {
