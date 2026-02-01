@@ -44,6 +44,10 @@ class UserService
 
     public function updateUser(string $uuid, array $userData): void
     {
+        if (isset($userData['password'])) {
+            $userData['password'] = Hash::make($userData['password']);
+        }
+
         $this->userRepository->update($uuid, $userData);
     }
 }

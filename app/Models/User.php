@@ -18,6 +18,11 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasUuids, HasApiTokens, HasFactory, Notifiable;
 
+    public function getRouteKeyName(): string
+    {
+        return 'username';
+    }
+
     public function uniqueIds(): array
     {
         return ['uuid'];

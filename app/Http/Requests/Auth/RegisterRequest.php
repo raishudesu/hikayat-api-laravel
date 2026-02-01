@@ -26,6 +26,7 @@ class RegisterRequest extends FormRequest
             'password' => ['required', 'string'],
             'first_name' => ['required', 'string', 'max:255'],
             'last_name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username'],
         ];
     }
 
@@ -37,6 +38,8 @@ class RegisterRequest extends FormRequest
             'password.required' => 'Your password is required.',
             'first_name.required' => 'Your first name is required.',
             'last_name.required' => 'Your last name is required.',
+            'username.required' => 'Your username is required.',
+            'username.unique' => 'This username is already taken.',
         ];
     }
 }

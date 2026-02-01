@@ -21,7 +21,7 @@ class CommentFactory extends Factory
             "post_id" => $this->faker->numberBetween(1, 10),
             // parent_id should be null at first, if not the seeding will fail
             // because there are no comments yet at first for having a parent_id
-            "parent_id" => $this->faker->numberBetween(4, 10),
+            "parent_id" => $this->faker->optional()->numberBetween(1, 10),
             "content" => $this->faker->sentence(),
         ];
     }
