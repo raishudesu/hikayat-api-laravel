@@ -4,12 +4,11 @@ namespace App\Http\Controllers\Users;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
 use App\Http\Requests\Users\UserFollowRequest;
+use App\Http\Requests\Users\UserUpdateRequest;
 use App\Http\Resources\UserResource;
 use App\Services\Users\UserService;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -23,23 +22,25 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-        return UserResource::make($user)->additional([
-            'message' => 'User retrieved successfully.',
-        ]);
+        return UserResource::make($user)
+            ->additional([
+                'message' => 'User retrieved successfully.',
+            ]);
     }
 
-    public function update(UserRequest $request, User $user)
+    public function update(UserUpdateRequest $request, User $user)
     {
         Gate::authorize('update', $user);
 
         $this->userService->updateUser($user->uuid, $request->validated());
 
-        return response()->json([
-            'message' => 'User updated successfully.',
-        ], 200);
+        return response()
+            ->json([
+                'message' => 'User updated successfully.',
+            ], 200);
     }
 
-    public function updatePassword(UserRequest $request)
+    public function updatePassword(UserUpdateRequest $request)
     {
         $user = $request->user();
 
@@ -47,9 +48,10 @@ class UserController extends Controller
 
         $this->userService->updateUser($user->uuid, $request->validated());
 
-        return response()->json([
-            'message' => 'User password updated successfully.',
-        ], 200);
+        return response()
+            ->json([
+                'message' => 'User password updated successfully.',
+            ], 200);
     }
 
     public function followUser(UserFollowRequest $request)
@@ -58,9 +60,10 @@ class UserController extends Controller
 
         $this->userService->followUser($user->uuid, $request->validated('following_id'));
 
-        return response()->json([
-            'message' => 'User followed successfully.',
-        ], 200);
+        return response()
+            ->json([
+                'message' => 'User followed successfully.',
+            ], 200);
     }
 
     public function unfollowUser(UserFollowRequest $request)
@@ -69,8 +72,9 @@ class UserController extends Controller
 
         $this->userService->unfollowUser($user->uuid, $request->validated('following_id'));
 
-        return response()->json([
-            'message' => 'User unfollowed successfully.',
-        ], 200);
+        return response()
+            ->json([
+                'message' => 'User unfollowed successfully.',
+            ], 200);
     }
 }

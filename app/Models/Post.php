@@ -25,6 +25,11 @@ class Post extends Model
     /** @use HasFactory<\Database\Factories\PostFactory> */
     use HasFactory, HasUuids, SoftDeletes;
 
+    public function getRouteKeyName()
+    {
+        return 'uuid';
+    }
+
     public function uniqueIds(): array
     {
         return ['uuid'];

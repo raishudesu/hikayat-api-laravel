@@ -9,6 +9,8 @@ interface UserRepositoryInterface
 {
     public function getByEmail(string $email): ?User;
 
+    public function getUserOrFail(User $user): ?User;
+
     public function create(array $userData): User;
 
     public function paginate(?int $page = null, int $perPage = 20): LengthAwarePaginator;

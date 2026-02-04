@@ -44,5 +44,8 @@ Route::group(['prefix' => 'v1', 'middleware' => 'throttle:api'], function () {
     Route::group(['prefix' => 'rest'], function () {
         Route::get('/users', [\App\Http\Controllers\Rest\UserController::class, 'show'])
             ->name('rest.users.show');
+
+        Route::get('/posts/{post}', [\App\Http\Controllers\Rest\PostController::class, 'show'])
+            ->name('rest.posts.show');
     });
 });

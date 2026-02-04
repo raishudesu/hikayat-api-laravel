@@ -6,21 +6,22 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Services\Users\UserService;
 
 class UserController extends Controller
 {
-    public function show(UserRequest $request)
+    protected UserService $userService;
+
+    public function __construct(UserService $userService)
     {
-        $user = User::where('username', $request->username)->first();
+        $this->userService = $userService;
+    }
 
-        if (!$user) {
-            return response()->json([
-                'message' => 'User not found.',
-            ], 404);
-        }
-
-        return UserResource::make($user)->additional([
-            'message' => 'User retrieved successfully.',
-        ]);
+    public function show(User $user)
+    {
+        return UserResource::make($user)
+            ->additional([
+                'message' => 'User retrieved successfully.',
+            ]);
     }
 }

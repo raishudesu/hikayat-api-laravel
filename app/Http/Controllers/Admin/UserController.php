@@ -24,16 +24,18 @@ class UserController extends Controller
     {
         $users = $this->userService->getUsersPaginated($request->query('page'), $request->query('per_page', 20));
 
-        return UserResource::collection($users)->additional([
-            'message' => 'Users retrieved successfully.',
-        ]);
+        return UserResource::collection($users)
+            ->additional([
+                'message' => 'Users retrieved successfully.',
+            ]);
     }
 
     public function show(User $user)
     {
-        return UserResource::make($user)->additional([
-            'message' => 'User retrieved successfully.',
-        ]);
+        return UserResource::make($user)
+            ->additional([
+                'message' => 'User retrieved successfully.',
+            ]);
     }
 
     public function update(UserRequest $request, User $user)
