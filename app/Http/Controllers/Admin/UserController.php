@@ -4,11 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserRequest;
+use App\Http\Requests\Users\UserRequest;
 use App\Http\Resources\UserResource;
 use App\Services\Users\UserService;
 use Illuminate\Support\Facades\Gate;
-use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {

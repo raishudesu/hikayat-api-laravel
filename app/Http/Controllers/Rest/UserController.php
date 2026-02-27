@@ -17,7 +17,7 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function show(User $user)
+    public function show(User $user): UserResource
     {
         return UserResource::make($user)
             ->additional([

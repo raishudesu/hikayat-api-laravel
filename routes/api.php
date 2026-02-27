@@ -40,10 +40,20 @@ Route::group(['prefix' => 'v1', 'middleware' => 'throttle:api'], function () {
             ->name('users.unfollow');
     });
 
+    Route::group(['prefix' => 'posts'], function () {
+        Route::apiResource("/", \App\Http\Controllers\Posts\PostController::class)
+            ->middleware('auth:sanctum')
+            ->names('posts')
+            ->parameters(['' => 'post']);
+    });
+
     // PUBLIC ACCESS
     Route::group(['prefix' => 'rest'], function () {
-        Route::get('/users', [\App\Http\Controllers\Rest\UserController::class, 'show'])
-            ->name('rest.users.show');
+        Route::get('/users/{user}', [\App\Http\Controllers\Rest\UserController::class, 'show'])
+            ->name('rest.users.user.show');
+
+        Route::get("/posts", [\App\Http\Controllers\Rest\PostController::class, "index"])
+            ->name('rest.posts');
 
         Route::get('/posts/{post}', [\App\Http\Controllers\Rest\PostController::class, 'show'])
             ->name('rest.posts.show');

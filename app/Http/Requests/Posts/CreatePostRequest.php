@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Users;
+namespace App\Http\Requests\Posts;
 
-use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Support\Facades\Hash;
 
-class UserRequest extends FormRequest
+class CreatePostRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +22,12 @@ class UserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'page' => 'nullable|integer|min:1',
-            'per_page' => 'nullable|integer|min:1|max:100',
-            'id' => 'string|uuid',
-            'username' => 'nullable|string|max:255',
+            'user_id' => "required|int",
+            "parent_id" => "sometimes|int",
+            "title" => "string|max:256",
+            "content" => "text|max:1000",
+            "latitude" => "sometimes|float",
+            "longitude" => "sometimes|float"
         ];
     }
 }

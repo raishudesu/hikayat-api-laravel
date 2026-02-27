@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Posts;
 
+use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -22,9 +23,9 @@ class PostResource extends JsonResource
             'longitude' => $this->longitude,
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-            'user' => UserResource::make($this->whenLoaded('user')),
-            'parent' => PostResource::make($this->whenLoaded('parent')),
-            'reposts' => PostResource::collection($this->whenLoaded('reposts')),
+            'author' => UserResource::make($this->whenLoaded('user')),
+            // 'parent' => PostResource::make($this->whenLoaded('parent')),
+            // 'reposts' => PostResource::collection($this->whenLoaded('reposts')),
             // 'comments' => CommentResource::collection($this->whenLoaded('comments')),
             // 'reports' => ReportResource::collection($this->whenLoaded('reports')),
             // 'interactions' => InteractionResource::collection($this->whenLoaded('interactions')),

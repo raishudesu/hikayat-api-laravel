@@ -25,8 +25,6 @@ class UserResource extends JsonResource
             'social_links' => $this->social_links,
             'follower_count' => $this->followers()->count(),
             'following_count' => $this->following()->count(),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }
